@@ -26,6 +26,58 @@ class ScoutingViewModel : ViewModel() {
 
     var undoStack: Stack<ScoutingActions> = Stack()
 
+    fun loadUiState(uiState: ScoutingUiState) {
+        _uiState.update { uiState }
+    }
+
+    fun setCompId(compId: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                compId = compId
+            )
+        }
+    }
+
+    fun setMatchId(matchId: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                matchId = matchId
+            )
+        }
+    }
+
+    fun setScouter(scouter: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                scouter = scouter
+            )
+        }
+    }
+
+    fun didClimb(state: Boolean) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                didClimb = state
+            )
+        }
+    }
+
+    fun resetMatch() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                autonPoints = 0,
+                autonBasketPoints = 0,
+                autonNetPoints = 0,
+                teleopPoints = 0,
+                teleopBasketPoints = 0,
+                teleopNetPoints = 0,
+                points = 0,
+                didClimb = false,
+                matchId = (currentState.matchId.toInt() + 1).toString()
+            )
+        }
+    }
+
     fun incrementAutonBasketPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(

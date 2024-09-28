@@ -1,9 +1,5 @@
 package io.oliverj.scoutingapp
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import android.os.Environment
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -26,25 +22,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.core.app.ActivityCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import io.oliverj.scoutingapp.data.ScoutingUiState
 import io.oliverj.scoutingapp.ui.AboutScreen
 import io.oliverj.scoutingapp.ui.AutonScreen
 import io.oliverj.scoutingapp.ui.MainScreen
 import io.oliverj.scoutingapp.ui.SaveScreen
 import io.oliverj.scoutingapp.ui.ScoutingViewModel
 import io.oliverj.scoutingapp.ui.TeleOpScreen
-import java.io.File
-import java.io.FileOutputStream
-import kotlin.io.path.Path
+import kotlinx.serialization.json.Json
+import org.json.JSONObject
 
 enum class ScoutingAppScreen(@StringRes val title: Int) {
     Main(title = R.string.app_name),
@@ -83,7 +78,8 @@ fun ScoutingAppAppBar(
 @Composable
 fun ScoutingAppApp(
     viewModel: ScoutingViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    reloadActivity: () -> Unit
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = ScoutingAppScreen.valueOf(
@@ -143,7 +139,13 @@ fun ScoutingAppApp(
         ) {
             composable(route = ScoutingAppScreen.Main.name) {
                 MainScreen(
-                    onAboutClicked = { navController.navigate(ScoutingAppScreen.About.name) }
+                    context = LocalContext.current,
+                    onAboutClicked = { navController.navigate(ScoutingAppScreen.About.name) },
+                    onFileLoad = { data ->
+                        viewModel.loadUiState(Json.decodeFromString(ScoutingUiState.serializer(), data!!))
+                    },
+                    viewModel = viewModel,
+                    onFinish = reloadActivity
                 )
             }
 
@@ -176,22 +178,18 @@ fun ScoutingAppApp(
             }
 
             composable(route = ScoutingAppScreen.Save.name) {
-                SaveScreen(snackbarHostState = snackbarHostState, onSave = {
-                    createFile(Path(Environment.getExternalStorageDirectory().toString(), "scouting").toString().toUri(), "${uiState.compId}-${uiState.matchId}-${uiState.scouter}", uiState.toString())
-                })
+                val jsonString: String = Json.encodeToString(ScoutingUiState.serializer(), uiState)
+                SaveScreen(
+                    snackbarHostState = snackbarHostState,
+                    fileName = "${uiState.compId}-${uiState.matchId}-${uiState.scouter}",
+                    fileData = jsonString,
+                    viewModel = viewModel,
+                    onComplete = {
+                        viewModel.resetMatch()
+                        navController.navigate(ScoutingAppScreen.Main.name)
+                    }
+                )
             }
         }
     }
-}
-
-const val CREATE_FILE = 1
-
-private fun createFile(pickerInitialUri: Uri, fileName: String, content: String) {
-    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-        addCategory(Intent.CATEGORY_OPENABLE)
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TITLE, "$fileName.txt")
-        putExtra(Intent.EXTRA_TEXT, content)
-    }
-    ActivityCompat.startActivityForResult(Activity(), intent, CREATE_FILE, null)
 }

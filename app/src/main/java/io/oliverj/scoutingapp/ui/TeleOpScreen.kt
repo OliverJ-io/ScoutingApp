@@ -37,6 +37,9 @@ fun TeleOpScreen(
             Text("[END DEBUG]")
         }
 
+        Text("Net Points: $netPoint")
+        Text("Basket Points: $basketPoint")
+
         Column(
             verticalArrangement = Arrangement.Bottom,
             modifier = Modifier.fillMaxHeight()

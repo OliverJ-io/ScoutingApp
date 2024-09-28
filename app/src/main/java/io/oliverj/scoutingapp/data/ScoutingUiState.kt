@@ -1,5 +1,8 @@
 package io.oliverj.scoutingapp.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ScoutingUiState(
     val compId: String = "",
     val autonNetPoints: Int = 0,
@@ -11,5 +14,5 @@ data class ScoutingUiState(
     val points: Int = 0,
     val didClimb: Boolean = false,
     val scouter: String = "",
-    val matchId: String = ""
+    val matchId: String = "1"
 )
