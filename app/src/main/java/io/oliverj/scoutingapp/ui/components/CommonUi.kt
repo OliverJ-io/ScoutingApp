@@ -10,12 +10,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -30,6 +35,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import io.oliverj.scoutingapp.ScoutingAppScreen
+import io.oliverj.scoutingapp.ui.ScoutingActions
+import io.oliverj.scoutingapp.ui.ScoutingViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -151,7 +161,8 @@ fun SimpleOutlinedTextField(initialContent: String, label: String = "Field", onC
     OutlinedTextField(
         value = text,
         onValueChange = { text = it; onChange(it) },
-        label = { Text(label) }
+        label = { Text(label) },
+        modifier = Modifier.padding(5.dp)
     )
 }
 
@@ -192,5 +203,65 @@ fun SimpleAlertDialog(title: String, content: String, shouldShowDialog: MutableS
                 }
             }
         )
+    }
+}
+
+@Composable
+fun AllianceButtonGroup(
+    label: String,
+    options: List<String>,
+    viewModel: ScoutingViewModel
+) {
+    var selectedString by remember { mutableStateOf(viewModel.uiState.value.alliance) }
+    Column( modifier = Modifier.padding(5.dp) ) {
+        Text(text = label, style = MaterialTheme.typography.labelLarge)
+        SingleChoiceSegmentedButtonRow {
+            options.forEachIndexed { index, label ->
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                    onClick = { selectedString = label.lowercase(); viewModel.setAlliance(label) },
+                    selected = label.lowercase() == selectedString
+                ) {
+                    Text(label)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun RobotButtonGroup(
+    label: String,
+    options: List<String>,
+    viewModel: ScoutingViewModel
+) {
+    var selectedString by remember { mutableStateOf(viewModel.uiState.value.robotId) }
+    Column( modifier = Modifier.padding(5.dp) ) {
+        Text(text = label, style = MaterialTheme.typography.labelLarge)
+        SingleChoiceSegmentedButtonRow {
+            options.forEachIndexed { index, label ->
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                    onClick = { selectedString = label.lowercase(); viewModel.setRobotId(label) },
+                    selected = label.lowercase() == selectedString
+                ) {
+                    Text(label)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun NextButton(
+    nextPage: String,
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    OutlinedButton(
+        onClick = { navController.navigate(nextPage) },
+        modifier = modifier
+    ) {
+        Text("Next")
     }
 }

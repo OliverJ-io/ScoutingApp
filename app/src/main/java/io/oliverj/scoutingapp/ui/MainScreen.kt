@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
@@ -22,9 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import io.oliverj.scoutingapp.R
+import io.oliverj.scoutingapp.ScoutingAppScreen
+import io.oliverj.scoutingapp.ui.components.AllianceButtonGroup
 import io.oliverj.scoutingapp.ui.components.FileChooser
 import io.oliverj.scoutingapp.ui.components.FileDialog
+import io.oliverj.scoutingapp.ui.components.NextButton
+import io.oliverj.scoutingapp.ui.components.RobotButtonGroup
 import io.oliverj.scoutingapp.ui.components.SimpleOutlinedTextField
 import io.oliverj.scoutingapp.ui.theme.ScoutingAppTheme
 import java.io.File
@@ -36,7 +44,8 @@ fun MainScreen(
     onAboutClicked: () -> Unit,
     onFileLoad: (String?) -> Unit = {},
     onFinish: () -> Unit,
-    viewModel: ScoutingViewModel
+    viewModel: ScoutingViewModel,
+    navController: NavHostController
 ) {
 
     val filePicker = rememberLauncherForActivityResult(
@@ -80,6 +89,24 @@ fun MainScreen(
             onChange = { viewModel.setScouter(it) }
         )
 
+        AllianceButtonGroup(
+            label = "Alliance",
+            options = listOf("Blue", "Red"),
+            viewModel = viewModel
+        )
+
+        RobotButtonGroup(
+            label = "Robot",
+            options = listOf("Left", "Right"),
+            viewModel = viewModel
+        )
+
+        NextButton(
+            nextPage = ScoutingAppScreen.Auton.name,
+            navController = navController,
+            modifier = Modifier.padding(5.dp)
+        )
+
         Box(
         modifier = modifier
             .fillMaxSize(),
@@ -100,7 +127,8 @@ fun MainScreenPreview() {
             onAboutClicked = {},
             context = LocalContext.current,
             viewModel = ScoutingViewModel(),
-            onFinish = {}
+            onFinish = {},
+            navController = rememberNavController()
         )
     }
 }

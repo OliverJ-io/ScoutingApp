@@ -145,7 +145,8 @@ fun ScoutingAppApp(
                         viewModel.loadUiState(Json.decodeFromString(ScoutingUiState.serializer(), data!!))
                     },
                     viewModel = viewModel,
-                    onFinish = reloadActivity
+                    onFinish = reloadActivity,
+                    navController = navController
                 )
             }
 
@@ -157,7 +158,8 @@ fun ScoutingAppApp(
                     stackView = { Text(viewModel.undoStack.toString()) },
                     basketPoints = uiState.autonBasketPoints,
                     netPoints = uiState.autonNetPoints,
-                    debug_mode = easter_egg
+                    debug_mode = easter_egg,
+                    navController = navController
                 )
             }
 
@@ -169,7 +171,8 @@ fun ScoutingAppApp(
                     basketPoints = uiState.teleopBasketPoints,
                     netPoints = uiState.teleopNetPoints,
                     stackView = { Text(viewModel.undoStack.toString()) },
-                    debug_mode = easter_egg
+                    debug_mode = easter_egg,
+                    navController = navController
                 )
             }
 

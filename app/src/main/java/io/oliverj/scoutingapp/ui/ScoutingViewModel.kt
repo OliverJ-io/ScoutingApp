@@ -54,6 +54,22 @@ class ScoutingViewModel : ViewModel() {
         }
     }
 
+    fun setRobotId(robotId: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                robotId = robotId
+            )
+        }
+    }
+
+    fun setAlliance(alliance: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                alliance = alliance
+            )
+        }
+    }
+
     fun didClimb(state: Boolean) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -73,7 +89,9 @@ class ScoutingViewModel : ViewModel() {
                 teleopNetPoints = 0,
                 points = 0,
                 didClimb = false,
-                matchId = (currentState.matchId.toInt() + 1).toString()
+                matchId = (currentState.matchId.toInt() + 1).toString(),
+                robotId = "left",
+                alliance = "blue"
             )
         }
     }
