@@ -94,6 +94,7 @@ class ScoutingViewModel : ViewModel() {
                 alliance = "blue"
             )
         }
+        undoStack.clear()
     }
 
     fun incrementAutonBasketPoints(is_undo: Boolean = false) {

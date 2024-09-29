@@ -219,7 +219,7 @@ fun AllianceButtonGroup(
             options.forEachIndexed { index, label ->
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                    onClick = { selectedString = label.lowercase(); viewModel.setAlliance(label) },
+                    onClick = { selectedString = label.lowercase(); viewModel.setAlliance(label.lowercase()) },
                     selected = label.lowercase() == selectedString
                 ) {
                     Text(label)
@@ -242,7 +242,7 @@ fun RobotButtonGroup(
             options.forEachIndexed { index, label ->
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                    onClick = { selectedString = label.lowercase(); viewModel.setRobotId(label) },
+                    onClick = { selectedString = label.lowercase(); viewModel.setRobotId(label.lowercase()) },
                     selected = label.lowercase() == selectedString
                 ) {
                     Text(label)
