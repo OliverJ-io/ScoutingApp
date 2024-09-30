@@ -71,6 +71,27 @@ fun AboutScreen(
                 }
             )
         }
+        if (debug_state) {
+            ListItem(
+                headlineContent = {
+                    Text(
+                        text = "Crash",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Gray
+                    )
+                },
+                supportingContent = {
+                    Text(
+                        text = "TEST",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Black
+                    )
+                },
+                modifier = Modifier.clickable {
+                    throw RuntimeException("Test Crash")
+                }
+            )
+        }
     }
 }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "791960156492",
+    "project_id": "scoutingapp-c22a8",
+    "storage_bucket": "scoutingapp-c22a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791960156492:android:975bd9396a0fe92aae37e9",
+        "android_client_info": {
+          "package_name": "io.oliverj.scoutingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNspEkOQdm09yOU8tJOaOcAyMpQ2xSz34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
