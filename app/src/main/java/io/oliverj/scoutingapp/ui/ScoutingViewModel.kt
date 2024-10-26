@@ -24,7 +24,8 @@ class ScoutingViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(ScoutingUiState())
     val uiState: StateFlow<ScoutingUiState> = _uiState.asStateFlow()
 
-    var undoStack: Stack<ScoutingActions> = Stack()
+    var teleopUndoStack: Stack<ScoutingActions> = Stack()
+    var autonUndoStack: Stack<ScoutingActions> = Stack()
 
     fun loadUiState(uiState: ScoutingUiState) {
         _uiState.update { uiState }
@@ -34,6 +35,14 @@ class ScoutingViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 compId = compId
+            )
+        }
+    }
+
+    fun setTeamId(teamId: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                teamId = teamId
             )
         }
     }
@@ -78,6 +87,22 @@ class ScoutingViewModel : ViewModel() {
         }
     }
 
+    fun setComment(comment: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                comment = comment
+            )
+        }
+    }
+
+    fun crossedLine(crossedLine: Boolean) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                crossedLine = crossedLine
+            )
+        }
+    }
+
     fun resetMatch() {
         _uiState.update { currentState ->
             currentState.copy(
@@ -91,10 +116,14 @@ class ScoutingViewModel : ViewModel() {
                 didClimb = false,
                 matchId = (currentState.matchId.toInt() + 1).toString(),
                 robotId = "left",
-                alliance = "blue"
+                alliance = "blue",
+                teamId = "",
+                crossedLine = false,
+                comment = ""
             )
         }
-        undoStack.clear()
+        autonUndoStack.clear()
+        teleopUndoStack.clear()
     }
 
     fun incrementAutonBasketPoints(is_undo: Boolean = false) {
@@ -106,7 +135,7 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.INC_AUTON_BASKET_POINTS)
+        autonUndoStack.push(ScoutingActions.INC_AUTON_BASKET_POINTS)
     }
 
     fun incrementAutonNetPoints(is_undo: Boolean = false) {
@@ -118,7 +147,7 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.INC_AUTON_NET_POINTS)
+        autonUndoStack.push(ScoutingActions.INC_AUTON_NET_POINTS)
     }
 
     fun incrementTeleOpBasketPoints(is_undo: Boolean = false) {
@@ -130,7 +159,7 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.INC_TELEOP_BASKET_POINTS)
+        teleopUndoStack.push(ScoutingActions.INC_TELEOP_BASKET_POINTS)
     }
 
     fun incrementTeleOpNetPoints(is_undo: Boolean = false) {
@@ -142,7 +171,7 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.INC_TELEOP_NET_POINTS)
+        teleopUndoStack.push(ScoutingActions.INC_TELEOP_NET_POINTS)
     }
 
     fun decrementAutonBasketPoints(is_undo: Boolean = false) {
@@ -154,7 +183,7 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.DEC_AUTON_BASKET_POINTS)
+        autonUndoStack.push(ScoutingActions.DEC_AUTON_BASKET_POINTS)
     }
 
     fun decrementAutonNetPoints(is_undo: Boolean = false) {
@@ -166,7 +195,7 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.DEC_AUTON_NET_POINTS)
+        autonUndoStack.push(ScoutingActions.DEC_AUTON_NET_POINTS)
     }
 
     fun decrementTeleOpBasketPoints(is_undo: Boolean = false) {
@@ -178,7 +207,7 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.DEC_TELEOP_BASKET_POINTS)
+        teleopUndoStack.push(ScoutingActions.DEC_TELEOP_BASKET_POINTS)
     }
 
     fun decrementTeleOpNetPoints(is_undo: Boolean = false) {
@@ -190,12 +219,29 @@ class ScoutingViewModel : ViewModel() {
             )
         }
         if (is_undo) return
-        undoStack.push(ScoutingActions.DEC_TELEOP_NET_POINTS)
+        teleopUndoStack.push(ScoutingActions.DEC_TELEOP_NET_POINTS)
     }
 
-    fun undoAction() {
-        if (undoStack.empty()) return
-        val last = undoStack.pop()
+    fun autonUndoAction() {
+        if (autonUndoStack.empty()) return
+        val last = autonUndoStack.pop()
+        when(last) {
+            ScoutingActions.INC_AUTON_BASKET_POINTS -> decrementAutonBasketPoints(is_undo = true)
+            ScoutingActions.INC_AUTON_NET_POINTS -> decrementAutonNetPoints(is_undo = true)
+            ScoutingActions.INC_TELEOP_BASKET_POINTS -> decrementTeleOpBasketPoints(is_undo = true)
+            ScoutingActions.INC_TELEOP_NET_POINTS -> decrementTeleOpNetPoints(is_undo = true)
+            ScoutingActions.DEC_AUTON_BASKET_POINTS -> incrementAutonBasketPoints(is_undo = true)
+            ScoutingActions.DEC_AUTON_NET_POINTS -> incrementAutonNetPoints(is_undo = true)
+            ScoutingActions.DEC_TELEOP_BASKET_POINTS -> incrementTeleOpBasketPoints(is_undo = true)
+            ScoutingActions.DEC_TELEOP_NET_POINTS -> incrementTeleOpNetPoints(is_undo = true)
+            else -> {}
+        }
+
+    }
+
+    fun teleopUndoAction() {
+        if (teleopUndoStack.empty()) return
+        val last = teleopUndoStack.pop()
         when(last) {
             ScoutingActions.INC_AUTON_BASKET_POINTS -> decrementAutonBasketPoints(is_undo = true)
             ScoutingActions.INC_AUTON_NET_POINTS -> decrementAutonNetPoints(is_undo = true)

@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class ScoutingUiState(
     val compId: String = "",
     val matchId: String = "1",
+    val teamId: String = "",
     val scouter: String = "",
     val alliance: String = "blue",
     val robotId: String = "left",
@@ -16,5 +17,7 @@ data class ScoutingUiState(
     val teleopBasketPoints: Int = 0,
     val teleopPoints: Int = 0,
     val points: Int = 0,
-    val didClimb: Boolean = false
+    val didClimb: Boolean = false,
+    val crossedLine: Boolean = false,
+    val comment: String = ""
 )

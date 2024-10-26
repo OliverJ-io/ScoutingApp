@@ -154,12 +154,13 @@ fun ScoutingAppApp(
                 AutonScreen(
                     onNetPointClicked = { viewModel.incrementAutonNetPoints() },
                     onBasketPointClicked = { viewModel.incrementAutonBasketPoints() },
-                    onUndo = { viewModel.undoAction() },
-                    stackView = { Text(viewModel.undoStack.toString()) },
+                    onUndo = { viewModel.autonUndoAction() },
+                    stackView = { Text(viewModel.autonUndoStack.toString()) },
                     basketPoints = uiState.autonBasketPoints,
                     netPoints = uiState.autonNetPoints,
                     debug_mode = easter_egg,
-                    navController = navController
+                    navController = navController,
+                    viewModel = viewModel
                 )
             }
 
@@ -167,10 +168,10 @@ fun ScoutingAppApp(
                 TeleOpScreen(
                     onNetPointClicked = { viewModel.incrementTeleOpNetPoints() },
                     onBasketPointClicked = { viewModel.incrementTeleOpBasketPoints() },
-                    onUndo = { viewModel.undoAction() },
+                    onUndo = { viewModel.teleopUndoAction() },
                     basketPoints = uiState.teleopBasketPoints,
                     netPoints = uiState.teleopNetPoints,
-                    stackView = { Text(viewModel.undoStack.toString()) },
+                    stackView = { Text(viewModel.teleopUndoStack.toString()) },
                     debug_mode = easter_egg,
                     navController = navController
                 )

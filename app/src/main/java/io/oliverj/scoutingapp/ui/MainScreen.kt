@@ -84,6 +84,12 @@ fun MainScreen(
         )
 
         SimpleOutlinedTextField(
+            initialContent = viewModel.uiState.collectAsState().value.teamId,
+            label = "Team",
+            onChange = { viewModel.setTeamId(it) }
+        )
+
+        SimpleOutlinedTextField(
             initialContent = viewModel.uiState.collectAsState().value.scouter,
             label = "Scouter",
             onChange = { viewModel.setScouter(it) }

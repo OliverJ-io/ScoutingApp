@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ScoutingApp</string>
-    <string name="app_version">v0.0.1</string>
-    <string name="build_number">0.1.0-alpha+0</string>
+    <string name="app_version">v1.1.0</string>
+    <string name="build_number">1.0.0.0+1.1.0</string>
     <string name="author">Oliver Johnson</string>
     <string name="auton">Auton</string>
     <string name="teleop">TeleOp</string>

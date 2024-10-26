@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import io.oliverj.scoutingapp.ScoutingAppScreen
+import io.oliverj.scoutingapp.ui.components.MatchScreen
 import io.oliverj.scoutingapp.ui.components.NextButton
 
 @Composable
@@ -30,75 +31,16 @@ fun TeleOpScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    var netPoint = netPoints
-    var basketPoint = basketPoints
-
-    Column {
-        Row(
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(5.dp).fillMaxWidth()
-        ) {
-            NextButton(
-                nextPage = ScoutingAppScreen.Save.name,
-                navController = navController
-            )
-        }
-                if (debug_mode) {
-            Text("[DEBUG]")
-            Text(netPoint.toString())
-            Text(basketPoint.toString())
-            stackView()
-            Text("[END DEBUG]")
-        }
-
-        Text("Net Points: $netPoint")
-        Text("Basket Points: $basketPoint")
-
-        Column(
-            verticalArrangement = Arrangement.Bottom,
-            modifier = Modifier.fillMaxHeight()
-        ) {
-            Row {
-                Button(
-                    onClick = {
-                        netPoint += 1
-                        onNetPointClicked()
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp)
-                        .weight(0.5f)
-                        .padding(5.dp),
-                    shape = RoundedCornerShape(5.dp)
-                ) {
-                    Text("Net")
-                }
-                Button(
-                    onClick = {
-                        basketPoint += 1
-                        onBasketPointClicked()
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp)
-                        .weight(0.5f)
-                        .padding(5.dp),
-                    shape = RoundedCornerShape(5.dp)
-                ) {
-                    Text("Basket")
-                }
-            }
-            Button(
-                onClick = onUndo,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-                    .padding(5.dp),
-                shape = RoundedCornerShape(5.dp)
-            ) {
-                Text("Undo")
-            }
-        }
-    }
+    MatchScreen(
+        netPoints,
+        basketPoints,
+        onNetPointClicked,
+        onBasketPointClicked,
+        onUndo,
+        stackView,
+        debug_mode,
+        navController,
+        modifier,
+        true
+    )
 }

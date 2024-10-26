@@ -3,17 +3,22 @@ package io.oliverj.scoutingapp.ui.components
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -32,19 +37,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import io.oliverj.scoutingapp.ScoutingAppScreen
-import io.oliverj.scoutingapp.ui.ScoutingActions
 import io.oliverj.scoutingapp.ui.ScoutingViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.JsonObject
-import java.nio.file.Files
 
 @Composable
 fun DataCard(
@@ -93,11 +94,11 @@ fun FileSaving(
     Button(onClick = {
         val intent = createNewDocumentIntent(fileName, isCsv)
         launcher.launch(intent)
-    }) {
+    }, modifier = Modifier.padding(5.dp)) {
         if (!isCsv) {
             Text(text = "Add to Files")
         } else {
-            Text(text = "Save as CSV")
+            Text(text = "Save")
         }
     }
 }
@@ -144,7 +145,7 @@ fun createNewDocumentIntent(fileName: String, isCsv: Boolean): Intent {
     } else {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "text/plain"
+            type = "text/csv"
             putExtra(Intent.EXTRA_TITLE, "$fileName.csv")
         }
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -162,17 +163,31 @@ fun SimpleOutlinedTextField(initialContent: String, label: String = "Field", onC
         value = text,
         onValueChange = { text = it; onChange(it) },
         label = { Text(label) },
+        singleLine = true,
         modifier = Modifier.padding(5.dp)
     )
 }
 
 @Composable
-fun SimpleCheckBox(initialState: Boolean, label: String = "Check", onChange: (Boolean) -> Unit = {}) {
+fun SimpleTextArea(initialContent: String, label: String = "Field", onChange: (String) -> Unit = {}) {
+    var text by remember { mutableStateOf(initialContent) }
+
+    OutlinedTextField(
+        value = text,
+        onValueChange = { text = it; onChange(it) },
+        label = { Text(label) },
+        modifier = Modifier.padding(5.dp)
+    )
+}
+
+@Composable
+fun SimpleCheckBox(initialState: Boolean, label: String = "Check", modifier: Modifier = Modifier, horizontalArrangement: Arrangement.Horizontal = Arrangement.Start, onChange: (Boolean) -> Unit = {}) {
     var checked by remember { mutableStateOf(initialState) }
 
     Row(
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
+        horizontalArrangement = horizontalArrangement,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
     ) {
         Text(text = label, style = MaterialTheme.typography.labelLarge)
         Checkbox(
@@ -203,6 +218,22 @@ fun SimpleAlertDialog(title: String, content: String, shouldShowDialog: MutableS
                 }
             }
         )
+    }
+}
+
+@Composable
+fun ComplexDialog(title: String, shouldShowDialog: MutableState<Boolean>, onDismiss: () -> Unit = {}, content: @Composable () -> Unit = {}) {
+    if (shouldShowDialog.value) {
+        Dialog(onDismissRequest = onDismiss) {
+            Card(
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column {
+                    Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(5.dp))
+                    content()
+                }
+            }
+        }
     }
 }
 
@@ -263,5 +294,109 @@ fun NextButton(
         modifier = modifier
     ) {
         Text("Next")
+    }
+}
+
+@Composable
+fun MatchScreen(
+    netPoints: Int,
+    basketPoints: Int,
+    onNetPointClicked: () -> Unit,
+    onBasketPointClicked: () -> Unit,
+    onUndo: () -> Unit,
+    stackView: @Composable () -> Unit = {},
+    debug_mode: Boolean,
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    isTeleop: Boolean = false,
+    additionalContent: @Composable () -> Unit = {}
+) {
+
+    var netPoint = netPoints
+    var basketPoint = basketPoints
+
+    var scroll by remember { mutableStateOf(ScrollState(0)) }
+
+    Column {
+
+        Column(
+            modifier = Modifier.verticalScroll(scroll, reverseScrolling = true).fillMaxSize()
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(5.dp).fillMaxWidth()
+            ) {
+                if (isTeleop) {
+                    NextButton(
+                        nextPage = ScoutingAppScreen.Save.name,
+                        navController = navController
+                    )
+                } else {
+                    NextButton(
+                        nextPage = ScoutingAppScreen.TeleOp.name,
+                        navController = navController
+                    )
+                }
+            }
+            if (debug_mode) {
+                Text("[DEBUG]")
+                Text(netPoint.toString())
+                Text(basketPoint.toString())
+                stackView()
+                Text("[END DEBUG]")
+            }
+
+            Text("Net Balls: $netPoint", style = MaterialTheme.typography.displayMedium)
+            Text("Basket Balls: $basketPoint", style = MaterialTheme.typography.displayMedium)
+
+        }
+
+        Column(
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier.fillMaxHeight()
+        ) {
+            additionalContent()
+            Row {
+                Button(
+                    onClick = {
+                        netPoint += 1
+                        onNetPointClicked()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .weight(0.5f)
+                        .padding(5.dp),
+                    shape = RoundedCornerShape(5.dp)
+                ) {
+                    Text("Net")
+                }
+                Button(
+                    onClick = {
+                        basketPoint += 1
+                        onBasketPointClicked()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .weight(0.5f)
+                        .padding(5.dp),
+                    shape = RoundedCornerShape(5.dp)
+                ) {
+                    Text("Basket")
+                }
+            }
+            Button(
+                onClick = onUndo,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .padding(5.dp),
+                shape = RoundedCornerShape(5.dp)
+            ) {
+                Text("Undo")
+            }
+        }
     }
 }
