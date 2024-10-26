@@ -1,0 +1,2 @@
+compId,matchId,teamId,scouter,alliance,robotId,autonNetPoints,autonBasketPoints,autonPoints,teleopNetPoints,teleopBasketPoints,teleopPoints,points,didClimb,crossedLine,comment
+o1wl,18,21,Kyle,red,left,0,1,1,0,0,0,1,false,true,Connection issues

@@ -1,0 +1,70 @@
+compId,matchId,teamId,scouter,alliance,robotId,autonNetPoints,autonBasketPoints,autonPoints,teleopNetPoints,teleopBasketPoints,teleopPoints,points,didClimb,crossedLine,comment
+O1wlc,1,3,Carter,blue,left,0,0,0,0,2,2,2,False,,
+O1WLC,10you,6977,Jake,blue,left,0,0,0,0,0,0,0,False,True,
+O1WLC,11,2137,jake,blue,right,0,1,1,1,1,2,3,False,True,
+O1WLC,12,51,jake,blue,right,0,0,0,0,0,0,0,False,False,Did not move
+O1WLC,13,7769,jake,blue,left,0,0,0,0,1,1,1,False,False,
+O1WLC,14,33,kyle,blue,left,0,1,1,1,6,7,8,False,True,
+O1WLC,15,308,kyle,blue,left,0,1,1,0,4,4,5,False,True,
+O1WLC,16,5053,Daxon,blue,right,0,0,0,0,0,0,0,False,True,
+O1WLC,17,51,jake,blue,left,0,0,0,0,3,3,3,True,True,
+O1WLC,18,3,jake,blue,left,0,0,0,0,0,0,0,False,True,
+O1WLC,19,469,jake,blue,left,0,1,1,0,0,0,1,False,True,"2 fouls
+broke"
+O1wlc,2,915,Carter,blue,left,0,0,0,0,0,0,0,False,,
+O1WLC,20,573,jake,blue,right,0,0,0,1,0,1,1,False,True,
+O1wlc,3,7553,Carter,blue,left,0,1,1,0,4,4,5,False,,
+O1wlc,4,33,Carter,blue,right,0,1,1,3,7,10,11,True,,
+O1wlc,5,2,Carter,blue,left,0,0,0,0,0,0,0,False,,
+O1wlc,6,7178,Daxon,blue,left,0,0,0,0,0,0,0,False,,
+O1wlc,7,573,Daxon,blue,right,0,0,0,0,0,0,0,False,,
+O1wlc,8,2960,Daxon,blue,left,0,0,0,0,8,8,8,False,,
+O1wlc,8,2960,Daxon,blue,left,0,0,0,0,8,8,8,False,,
+O1wlc,9,7178,Daxon,blue,left,0,0,0,0,0,0,0,False,,
+O1WLC,10,2960,Evan,red,left,0,0,0,0,11,11,11,False,False,
+O1WLC,11,915,Evan,red,left,0,0,0,0,0,0,0,False,True,Good defense
+O1WLC,12,7553,Evan,red,left,0,1,1,0,7,7,8,False,True,
+O1WLC,13,469,Evan,red,left,0,1,1,1,2,3,4,False,True,
+O1WLC,14,6977,Evan,red,left,0,0,0,0,0,0,0,False,False,Died 
+O1WLC,15,7692,Evan,red,left,0,0,0,0,0,0,0,False,True,Died 
+O1WLC,16,2,Evan,red,left,0,0,0,0,1,1,1,False,True,Died 
+O1WLC,17,7769,Evan,red,left,0,0,0,0,0,0,0,False,True,
+O1WLC,18,308,Evan,red,left,0,1,1,0,3,3,4,False,True,
+O1WLC,19,2,Evan,red,left,0,0,0,0,2,2,2,False,True,
+O1WLC,20,7178,Evan,red,right,0,0,0,0,0,0,0,False,False,
+O1WLC,5,308,Will,red,left,0,1,1,0,7,7,8,False,,
+O1WLC,6,5053,Will,red,left,0,0,0,0,0,0,0,False,,
+O1WLC,7,7553,Will,red,right,0,0,0,1,3,4,4,False,,
+O1WLC,8,3,Will,red,right,0,0,0,0,1,1,1,False,,
+O1WLC,9,469,Evan,red,left,0,0,0,0,0,0,0,False,,
+O1WLC,10,3,Daxon,blue,right,0,0,0,0,4,4,4,False,True,
+O1WLC,11,7692,Daxon,blue,left,0,0,0,0,0,0,0,False,False,Robot didn't move the entire match
+O1WLC,12,2,Daxon,blue,left,0,0,0,0,1,1,1,False,True,
+O1WLC,13,915,Daxon,blue,right,0,0,0,0,0,0,0,False,True,Keep purposely bumping unto the other teams robot. also cannot shoot or I take
+O1WLC,14,51,Daxon,blue,right,0,0,0,0,6,6,6,True,False,
+O1WLC,15,7553,kyle,blue,right,0,1,1,0,8,8,9,True,True,
+O1WLC,16,573,jake,blue,left,0,0,0,2,1,3,3,False,True,
+O1WLC,17,6977,Daxon,blue,right,0,0,0,0,0,0,0,False,True,
+O1WLC,18,5053,Daxon,blue,right,0,0,0,0,0,0,0,False,True,Popped a ball
+O1WLC,19,2960,Daxon,blue,left,0,0,0,0,8,8,8,False,False,Popped a ball
+O1WLC,20,7553,Daxon,blue,left,0,0,0,0,7,7,7,True,True,
+O1WLC,6,469,Connor,blue,right,0,1,1,0,2,2,3,False,,
+O1WLC,7,7769,Connor,blue,right,0,0,0,0,0,0,0,False,,
+O1WLC,8,2937,Connor,blue,right,0,1,1,2,2,4,5,False,,
+O1WLC,9,7769,Connor,blue,left,0,0,0,0,0,0,0,False,,
+o1wl,10,573,Connor,blue,right,0,0,0,0,0,0,0,False,True,They tried :(
+o1wl,11,33,Connor,red,right,0,2,2,1,7,8,10,False,True,SO GOOD
+o1wl,12,5053,Connor,red,right,0,0,0,0,0,0,0,False,False,bad
+o1wl,13,3,Connor,red,right,0,0,0,0,0,0,0,False,False,died
+o1wl,14,7178,Connor,red,right,0,0,0,0,2,2,2,False,False,mid
+o1wl,15,2969,Connor,red,right,0,0,0,0,8,8,8,False,False,mid
+o1wl,16,2137,Kyle,red,right,0,1,1,2,0,2,3,False,True,"hp intake, broke down or disconnected twice"
+o1wl,17,7692,Kyle,red,right,0,0,0,0,0,0,0,False,True,"rough intake, shooter crates backspin
+"
+o1wl,18,21,Kyle,red,left,0,1,1,0,0,0,1,False,True,Connection issues
+o1wl,19,33,Kyle,red,right,0,0,0,0,2,2,2,False,True,pinned often by 469
+o1wl,20,915,Kyle,red,left,0,0,0,0,0,0,0,False,True,
+O1WLC,6,7692,jake,red,right,0,0,0,0,0,0,0,False,,
+O1WLC,7,33,jake,red,left,0,1,1,4,7,11,12,False,,
+O1WLC,8,51,Kyle,red,left,0,0,0,0,5,5,5,True,,
+O1WLC,9,308,Kyle,red,right,0,1,1,0,5,5,6,False,,

@@ -1,0 +1,2 @@
+compId,matchId,teamId,scouter,alliance,robotId,autonNetPoints,autonBasketPoints,autonPoints,teleopNetPoints,teleopBasketPoints,teleopPoints,points,didClimb,crossedLine,comment
+O1WLC,20,573,jake,blue,right,0,0,0,1,0,1,1,false,true,

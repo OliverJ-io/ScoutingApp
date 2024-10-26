@@ -1,0 +1,2 @@
+compId,matchId,teamId,scouter,alliance,robotId,autonNetPoints,autonBasketPoints,autonPoints,teleopNetPoints,teleopBasketPoints,teleopPoints,points,didClimb
+O1WLC,9,308,Kyle,red,right,0,1,1,0,5,5,6,false

@@ -1,0 +1,2 @@
+compId,matchId,teamId,scouter,alliance,robotId,autonNetPoints,autonBasketPoints,autonPoints,teleopNetPoints,teleopBasketPoints,teleopPoints,points,didClimb,crossedLine,comment
+O1WLC,18,308,Evan,red,left,0,1,1,0,3,3,4,false,true,

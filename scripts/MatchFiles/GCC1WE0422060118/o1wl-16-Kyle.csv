@@ -1,0 +1,2 @@
+compId,matchId,teamId,scouter,alliance,robotId,autonNetPoints,autonBasketPoints,autonPoints,teleopNetPoints,teleopBasketPoints,teleopPoints,points,didClimb,crossedLine,comment
+o1wl,16,2137,Kyle,red,right,0,1,1,2,0,2,3,false,true,"hp intake, broke down or disconnected twice"
