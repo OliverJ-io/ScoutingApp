@@ -129,9 +129,12 @@ class ScoutingViewModel : ViewModel() {
     fun incrementAutonBasketPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
-                autonBasketPoints = currentState.autonBasketPoints + 1,
-                autonPoints = currentState.autonPoints + 1,
-                points = currentState.points + 1
+                autonBasketScores = currentState.autonBasketScores + 1,
+                autonBasketPoints = currentState.autonBasketPoints + 4,
+                autonScores = currentState.autonScores + 1,
+                autonPoints = currentState.autonPoints + 4,
+                scores = currentState.scores + 1,
+                points = currentState.points + 4,
             )
         }
         if (is_undo) return
@@ -141,9 +144,9 @@ class ScoutingViewModel : ViewModel() {
     fun incrementAutonNetPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
-                autonNetPoints = currentState.autonNetPoints + 1,
-                autonPoints = currentState.autonPoints + 1,
-                points = currentState.points + 1
+                autonNetScores = currentState.autonNetScores + 1,
+                autonScores = currentState.autonScores + 1,
+                scores = currentState.scores + 1
             )
         }
         if (is_undo) return
@@ -153,9 +156,12 @@ class ScoutingViewModel : ViewModel() {
     fun incrementTeleOpBasketPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
-                teleopBasketPoints = currentState.teleopBasketPoints + 1,
-                teleopPoints = currentState.teleopPoints + 1,
-                points = currentState.points + 1
+                teleopBasketScores = currentState.teleopBasketScores + 1,
+                teleopBasketPoints = currentState.teleopBasketPoints + 2,
+                teleopScores = currentState.teleopScores + 1,
+                teleopPoints = currentState.teleopPoints + 2,
+                scores = currentState.scores + 1,
+                points = currentState.points + 2
             )
         }
         if (is_undo) return
@@ -165,8 +171,11 @@ class ScoutingViewModel : ViewModel() {
     fun incrementTeleOpNetPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
+                teleopNetScores = currentState.teleopNetScores + 1,
                 teleopNetPoints = currentState.teleopNetPoints + 1,
+                teleopScores = currentState.teleopScores + 1,
                 teleopPoints = currentState.teleopPoints + 1,
+                scores = currentState.scores + 1,
                 points = currentState.points + 1
             )
         }
@@ -177,9 +186,12 @@ class ScoutingViewModel : ViewModel() {
     fun decrementAutonBasketPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
-                autonBasketPoints = currentState.autonBasketPoints - 1,
-                autonPoints = currentState.autonPoints - 1,
-                points = currentState.points - 1
+                autonBasketScores = currentState.autonBasketScores - 1,
+                autonBasketPoints = currentState.autonBasketPoints - 4,
+                autonScores = currentState.autonScores - 1,
+                autonPoints = currentState.autonPoints - 4,
+                scores = currentState.scores - 1,
+                points = currentState.points - 4
             )
         }
         if (is_undo) return
@@ -189,9 +201,9 @@ class ScoutingViewModel : ViewModel() {
     fun decrementAutonNetPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
-                autonNetPoints = currentState.autonNetPoints - 1,
-                autonPoints = currentState.autonPoints - 1,
-                points = currentState.points - 1
+                autonNetScores = currentState.autonNetScores - 1,
+                autonScores = currentState.autonPoints - 1,
+                scores = currentState.points - 1
             )
         }
         if (is_undo) return
@@ -201,9 +213,12 @@ class ScoutingViewModel : ViewModel() {
     fun decrementTeleOpBasketPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
-                teleopBasketPoints = currentState.teleopBasketPoints - 1,
-                teleopPoints = currentState.teleopPoints - 1,
-                points = currentState.points - 1
+                teleopBasketScores = currentState.teleopBasketScores - 1,
+                teleopBasketPoints = currentState.teleopBasketPoints - 2,
+                teleopScores = currentState.teleopScores - 1,
+                teleopPoints = currentState.teleopPoints - 2,
+                scores = currentState.scores - 1,
+                points = currentState.points - 2
             )
         }
         if (is_undo) return
@@ -213,8 +228,11 @@ class ScoutingViewModel : ViewModel() {
     fun decrementTeleOpNetPoints(is_undo: Boolean = false) {
         _uiState.update { currentState ->
             currentState.copy(
+                teleopNetScores = currentState.teleopNetScores - 1,
                 teleopNetPoints = currentState.teleopNetPoints - 1,
+                teleopScores = currentState.teleopScores - 1,
                 teleopPoints = currentState.teleopPoints - 1,
+                scores = currentState.scores - 1,
                 points = currentState.points - 1
             )
         }
